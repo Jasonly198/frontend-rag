@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import Avatar from '@mui/material/Avatar';
+import axios from 'axios';  // 导入 axios
 import { varAlpha } from 'src/theme/styles';
 import { DashboardContent } from 'src/layouts/dashboard';
 
@@ -21,6 +22,8 @@ export function ChatView({ title = 'Blank' }: Props) {
   const [chatMessages, setChatMessages] = useState<{ [key: string]: { position: string; text: string; id: string }[] }>({});
   const [inputMessage, setInputMessage] = useState('');
   const [chatType, setChatType] = useState<'shared' | 'personal'>('shared');
+
+  const messagesEndRef = useRef<HTMLDivElement | null>(null);  // 创建一个 ref 来引用消息列表底部
 
   const handleCreateChat = () => {
     if (newChatName.trim()) {
@@ -41,7 +44,8 @@ export function ChatView({ title = 'Blank' }: Props) {
     setActiveChat(chatName);
   };
 
-  const handleSendMessage = () => {
+  // 发送消息并调用 OpenAI API
+  const handleSendMessage = async () => {
     if (inputMessage.trim() && activeChat) {
       const newMessage = { position: 'right', text: inputMessage, id: 'You' };
       setChatMessages((prev) => ({
@@ -49,32 +53,45 @@ export function ChatView({ title = 'Blank' }: Props) {
         [activeChat]: [...(prev[activeChat] || []), newMessage],
       }));
 
-      // 添加自动回复
-      const autoReply = generateAutoReply(inputMessage);
-      setChatMessages((prev) => ({
-        ...prev,
-        [activeChat]: [...(prev[activeChat] || []), autoReply],
-      }));
-
+      // 清空输入框
       setInputMessage('');
+
+      try {
+        // 调用 OpenAI API 获取 ChatGPT 回复
+        const response = await axios.post(
+          'https://dzqc.link/v1/chat/completions',
+          {
+            model: 'gpt-4o-mini', // 或者你使用其他模型
+            messages: [{ role: 'user', content: inputMessage }],
+          },
+          {
+            headers: {
+              'Authorization': `sk-YppPHLyGPAZsKyDLF84a5dA0D9Ac4188B5D97d4b222e91Dd`, // 使用你自己的 OpenAI API 密钥
+              'Content-Type': 'application/json',
+            },
+          }
+        );
+
+        const botReply = response.data.choices[0].message.content;
+
+        // 将 ChatGPT 的回复添加到聊天记录中
+        const autoReply = { position: 'left', text: botReply, id: 'Bot' };
+        setChatMessages((prev) => ({
+          ...prev,
+          [activeChat]: [...(prev[activeChat] || []), autoReply],
+        }));
+      } catch (error) {
+        console.error('Error contacting OpenAI:', error);
+      }
     }
   };
 
-  // 生成自动回复
-  const generateAutoReply = (userMessage: string) => {
-    let replyText = "I didn't understand that."; // 默认回复
-
-    // 简单的自动回复逻辑
-    if (userMessage.includes('hi') || userMessage.includes('hello')) {
-      replyText = "Hello! How can I assist you today?";
-    } else if (userMessage.includes('help')) {
-      replyText = "Sure, I’m here to help! What do you need?";
-    } else if (userMessage.includes('bye')) {
-      replyText = "Goodbye! Have a great day!";
+  // 在每次聊天记录变化后，自动滚动到最底部
+  useEffect(() => {
+    if (messagesEndRef.current) {
+      messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
     }
-
-    return { position: 'left', text: replyText, id: 'Bot' };
-  };
+  }, [chatMessages, activeChat]);  // 依赖 chatMessages 和 activeChat，当它们变化时触发滚动
 
   return (
     <DashboardContent maxWidth="xl">
@@ -117,7 +134,6 @@ export function ChatView({ title = 'Blank' }: Props) {
               {chat}
             </Button>
           ))}
-
           <TextField
             variant="outlined"
             size="small"
@@ -193,6 +209,7 @@ export function ChatView({ title = 'Blank' }: Props) {
                 </Box>
               </Box>
             ))}
+            <div ref={messagesEndRef} /> {/* 用于滚动到最新消息的位置 */}
           </Box>
 
           {/* 输入框和发送按钮 */}
