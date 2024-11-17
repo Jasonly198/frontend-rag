@@ -68,6 +68,7 @@ export const paths = {
   navigation: {
     root: ROOTS.DASHBOARD,
     database: `/database`,
+    files_list: `/database/files_list`,
     file_management: `/file_management`,
   }
 };

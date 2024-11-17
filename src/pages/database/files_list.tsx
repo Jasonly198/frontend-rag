@@ -1,10 +1,12 @@
 import { Helmet } from 'react-helmet-async';
-import Box from '@mui/material/Box';
-import { DatabaseChoiceView } from 'src/sections/database/databaseChoose';
+
 import { CONFIG } from 'src/config-global';
+
+import { FileListView } from 'src/sections/file/fileList';
+
 // ----------------------------------------------------------------------
 
-const metadata = { title: `Database Page - ${CONFIG.appName}` };
+const metadata = { title: `PageFile test | Dashboard - ${CONFIG.appName}` };
 
 export default function Page() {
   return (
@@ -13,7 +15,7 @@ export default function Page() {
         <title> {metadata.title}</title>
       </Helmet>
 
-      <DatabaseChoiceView title="Which database are we going to use today?" />
+      <FileListView title="FileList" />
     </>
   );
 }

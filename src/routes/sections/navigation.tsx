@@ -9,6 +9,7 @@ import { AuthGuard } from 'src/auth/guard';
 const DatabaseComponent = lazy(() => import('src/pages/database/database'));
 const ChatComponent = lazy(() => import('src/pages/dashboard/one'));
 const FileManagementComponent = lazy(() => import('src/pages/file_management/file_management'));
+const FilesListComponent = lazy(() => import('src/pages/database/files_list'));
 
 const layoutContent = (
   <DashboardLayout>
@@ -27,6 +28,7 @@ export const navigationRoutes = [
         path: 'database',
         children: [
           { element: <DatabaseComponent />, index: true },
+          { path: 'files_list', element: <FilesListComponent /> },
         ],
       },
       {
