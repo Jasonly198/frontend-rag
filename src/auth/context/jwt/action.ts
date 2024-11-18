@@ -23,8 +23,13 @@ export type SignUpParams = {
 export const signInWithPassword = async ({ email, password }: SignInParams): Promise<void> => {
   try {
     const params = { email, password };
+    console.log('params', params);
 
     const res = await axios.post(endpoints.auth.signIn, params);
+
+    if (res.status >= 400) {
+      throw new Error('Email already exists');
+    }
 
     const { accessToken } = res.data;
 
@@ -56,7 +61,9 @@ export const signUp = async ({
   };
 
   try {
+    console.log("我被调用了");
     const res = await axios.post(endpoints.auth.signUp, params);
+    
 
     const { accessToken } = res.data;
 

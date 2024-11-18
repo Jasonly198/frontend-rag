@@ -59,20 +59,16 @@ export function ChatView({ title = 'Blank' }: Props) {
       try {
         // 调用 OpenAI API 获取 ChatGPT 回复
         const response = await axios.post(
-          'https://dzqc.link/v1/chat/completions',
-          {
-            model: 'gpt-4o-mini', // 或者你使用其他模型
-            messages: [{ role: 'user', content: inputMessage }],
-          },
+          '/chat_script',
+          { user_input: inputMessage }, // 请求体
           {
             headers: {
-              'Authorization': `sk-YppPHLyGPAZsKyDLF84a5dA0D9Ac4188B5D97d4b222e91Dd`, // 使用你自己的 OpenAI API 密钥
               'Content-Type': 'application/json',
             },
           }
         );
-
-        const botReply = response.data.choices[0].message.content;
+        console.log(response);
+        const botReply = response.data.answer;
 
         // 将 ChatGPT 的回复添加到聊天记录中
         const autoReply = { position: 'left', text: botReply, id: 'Bot' };
