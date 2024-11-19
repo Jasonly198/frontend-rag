@@ -13,6 +13,13 @@ import { _contacts, _notifications } from 'src/_mock';
 import { Logo } from 'src/components/logo';
 import { useSettingsContext } from 'src/components/settings';
 
+import { useState } from 'react';
+
+import { DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
+import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import TextField from '@mui/material/TextField';
+
 import { Main } from './main';
 import { NavMobile } from './nav-mobile';
 import { layoutClasses } from '../classes';
@@ -33,6 +40,7 @@ import { WorkspacesPopover } from '../components/workspaces-popover';
 import { navData as dashboardNavData } from '../config-nav-dashboard';
 import { NotificationsDrawer } from '../components/notifications-drawer';
 import { FunctionButtonGroup } from '../components/function-button-group';
+import { AddWorkspaceButton } from '../components/add-workspace-button';
 
 // ----------------------------------------------------------------------
 
@@ -63,6 +71,18 @@ export function DashboardLayout({ sx, children, header, data }: DashboardLayoutP
   const isNavMini = settings.navLayout === 'mini';
   const isNavHorizontal = settings.navLayout === 'horizontal';
   const isNavVertical = isNavMini || settings.navLayout === 'vertical';
+
+  const [open, setOpen] = useState(false);
+
+  // 打开对话框
+    const handleClickOpen = () => {
+      setOpen(true);
+    };
+  
+  // 关闭对话框
+    const handleClose = () => {
+      setOpen(false);
+    };
 
   return (
     <LayoutSection
@@ -140,9 +160,11 @@ export function DashboardLayout({ sx, children, header, data }: DashboardLayoutP
                     sx={{ [theme.breakpoints.up(layoutQuery)]: { display: 'flex' } }}
                   />
                 )}
+
+
+              
                 {/* -- funtion-button-group -- */}
                   <FunctionButtonGroup
-                    onClick={mobileNavOpen.onTrue}
                     sx={{
                       mr: 1,
                       ml: -1,
@@ -190,8 +212,8 @@ export function DashboardLayout({ sx, children, header, data }: DashboardLayoutP
        * Sidebar
        *************************************** */
       sidebarSection={
-        isNavHorizontal ? null : (
-          <NavVertical
+        isNavHorizontal ? null : (   
+          <NavVertical     
             data={navData}
             isNavMini={isNavMini}
             layoutQuery={layoutQuery}
@@ -203,6 +225,7 @@ export function DashboardLayout({ sx, children, header, data }: DashboardLayoutP
               )
             }
           />
+        
         )
       }
       /** **************************************

@@ -7,9 +7,11 @@ import { LoadingScreen } from 'src/components/loading-screen';
 import { AuthGuard } from 'src/auth/guard';
 
 const DatabaseComponent = lazy(() => import('src/pages/database/database'));
-const ChatComponent = lazy(() => import('src/pages/dashboard/one'));
+const ChatComponent = lazy(() => import('src/pages/chat/chat'));
 const FileManagementComponent = lazy(() => import('src/pages/file_management/file_management'));
+const WorkspaceComponent = lazy(() => import('src/pages/workspace/workspace'));
 const FilesListComponent = lazy(() => import('src/pages/database/files_list'));
+
 
 const layoutContent = (
   <DashboardLayout>
@@ -32,17 +34,11 @@ export const navigationRoutes = [
         ],
       },
       {
-        path: 'dashboard/personal',
+        path: 'workspace',
         children: [
-          { element: <ChatComponent />, index: true },
+          { element: <WorkspaceComponent />, index: true },
         ],
-      },
-      {
-        path: 'file_management',
-        children: [
-          { element: <FileManagementComponent />, index: true },
-        ],
-      },
+      }
     ],
   },
 ];

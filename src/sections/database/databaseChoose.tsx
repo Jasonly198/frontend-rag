@@ -186,8 +186,8 @@ export function DatabaseChoiceView({ title = 'Blank' }: Props) {
               padding: 2, // 添加内边距
               boxSizing: 'border-box', // 确保内边距和边框计算在总宽度和高度内
             }}
-            onClick={() => handleButtonClick(button.id)}
-            // onClick={() => navigate(paths.navigation.files_list)}
+            // onClick={() => handleButtonClick(button.id)}
+            onClick={() => navigate(paths.navigation.files_list)}
           >
             <Typography variant="h6" sx={{ marginBottom: 1 }}>
               {button.name}

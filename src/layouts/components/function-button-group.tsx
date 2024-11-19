@@ -49,11 +49,14 @@ export function FunctionButtonGroup({ sx, ...other }: ButtonProps) {
       case 'Database':
         navigate(paths.navigation.database); // 设定数据库页面的路径
         break;
-      case 'Chat':
-        navigate(paths.navigation.root); // 设定聊天页面的路径
-        break;
-      case 'File Management':
-        navigate(paths.navigation.file_management); // 设定文件管理页面的路径
+      // case 'Chat':
+      //   navigate(paths.navigation.chat); // 设定聊天页面的路径
+      //   break;
+      // case 'File Management':
+      //   navigate(paths.navigation.file_management); // 设定文件管理页面的路径
+      //   break;
+      case 'Workspace':
+        navigate(paths.navigation.workspace); // 设定工作区
         break;
       default:
         break;
@@ -72,9 +75,10 @@ export function FunctionButtonGroup({ sx, ...other }: ButtonProps) {
         border: '1px solid #C0C0C0'
       }}
     >
+         {/* <Button onClick={() => handleButtonClick('Chat')} sx={{ color: selectedButton === 'Chat' ? 'inherit' : '#C0C0C0', backgroundColor: 'white' }}>Chat</Button> */}
       <Button onClick={() => handleButtonClick('Database')} sx={{ color: selectedButton === 'Database' ? 'inherit' : '#C0C0C0', backgroundColor: 'white' }}>Database</Button>
-      <Button onClick={() => handleButtonClick('Chat')} sx={{ color: selectedButton === 'Chat' ? 'inherit' : '#C0C0C0', backgroundColor: 'white' }}>Chat</Button>
-      <Button onClick={() => handleButtonClick('File Management')} sx={{ color: selectedButton === 'File Management' ? 'inherit' : '#C0C0C0', backgroundColor: 'white' }}>File Management</Button>
+      {/* <Button onClick={() => handleButtonClick('File Management')} sx={{ color: selectedButton === 'File Management' ? 'inherit' : '#C0C0C0', backgroundColor: 'white' }}>File Management</Button> */}
+      <Button onClick={() => handleButtonClick('Workspace')} sx={{ color: selectedButton === 'Workspace' ? 'inherit' : '#C0C0C0', backgroundColor: 'white' }}>Workspace</Button>
     </ButtonGroup>
   );
 }

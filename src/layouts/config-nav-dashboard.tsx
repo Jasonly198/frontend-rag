@@ -3,6 +3,9 @@ import { paths } from 'src/routes/paths';
 import { CONFIG } from 'src/config-global';
 
 import { SvgColor } from 'src/components/svg-color';
+import { useEffect, useState } from 'react';
+
+import axios from 'axios';
 
 // ----------------------------------------------------------------------
 
@@ -39,64 +42,35 @@ const ICONS = {
   parameter: icon('ic-parameter'),
 };
 
-// ----------------------------------------------------------------------
 
-export const navData = [
-  /**
-   * MyWorkSpace
-   */
-  {
-    subheader: 'MyWorkSpace1',
+const fetchWorkspaces = async () => {
+  console.log('Fetching workspaces...');
+  try {
+    const response = await axios.get('http://localhost:8080/ragApplications/workspace/list');
+    console.log('Fetched workspaces:', response.data); 
+    return response.data; 
+  } catch (error) {
+    console.error('Error fetching workspaces:', error);
+    return [];
+  }
+};
+
+
+const buildNavData = (workspaces: any[]) => 
+  workspaces.map((workspace: any, index: number) => ({
+    subheader: workspace.name, 
     items: [
       {
-        // todo: change the url
-        title: 'Personal',
-        path: paths.dashboard.personal.root,
-        icon: ICONS.user,
-        children: [
-          { title: 'Chatbot1', path: paths.dashboard.personal.root },
-          { title: 'Chatbot2', path: paths.dashboard.personal.two },
-          { title: 'Chatbot3', path: paths.dashboard.personal.three },
-        ],
-      },
-      {
-        title: 'Shared',
-        path: paths.dashboard.group.root,
-        icon: ICONS.user,
-        children: [
-          { title: 'Chatbot4', path: paths.dashboard.group.root },
-          { title: 'Chatbot5', path: paths.dashboard.group.five },
-          { title: 'Chatbot6', path: paths.dashboard.group.six },
-        ],
-      },
-
+        title: 'Chat',
+        path: `/${workspace.name.replace(/\s+/g, '-')}/chat`,
+        icon: ICONS.chat,
+      } 
     ],
-  },
-  {
-    subheader: 'MyWorkSpace2',
-    items: [
-      {
-        // todo: change the url
-        title: 'Personal',
-        path: paths.dashboard.personal2.root,
-        icon: ICONS.user,
-        children: [
-          { title: 'Chatbot1', path: paths.dashboard.personal2.root },
-          { title: 'Chatbot2', path: paths.dashboard.personal2.two },
-          { title: 'Chatbot3', path: paths.dashboard.personal2.three },
-        ],
-      },
-      {
-        title: 'Shared',
-        path: paths.dashboard.group2.root,
-        icon: ICONS.user,
-        children: [
-          { title: 'Chatbot4', path: paths.dashboard.group2.root },
-          { title: 'Chatbot5', path: paths.dashboard.group2.five },
-          { title: 'Chatbot6', path: paths.dashboard.group2.six },
-        ],
-      },
+  }));
 
-    ],
-  },
-];
+export const navData = await (async () => {
+  const workspaces = await fetchWorkspaces();
+  return buildNavData(workspaces);
+})();
+
+
