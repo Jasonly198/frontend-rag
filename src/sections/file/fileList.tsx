@@ -82,7 +82,7 @@ export function FileListView({ title = 'Blank' }: Props) {
   };
 
   const handlePageChange = (event: React.ChangeEvent<unknown>, newPage: number) => {
-    setPage(newPage);
+    setPage(newPage - 1);
   };
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -230,7 +230,7 @@ export function FileListView({ title = 'Blank' }: Props) {
 
         <Pagination
           count={totalPages}
-          page={page}
+          page={page + 1}
           onChange={handlePageChange}
           sx={{ mt: 2, display: 'flex', justifyContent: 'center' }}
         />

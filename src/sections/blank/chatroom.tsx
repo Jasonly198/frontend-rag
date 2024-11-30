@@ -59,7 +59,7 @@ export function ChatView({ title = 'Blank' }: Props) {
       try {
         // 调用 OpenAI API 获取 ChatGPT 回复
         const response = await axios.post(
-          '/chat_script',
+          'http://localhost:8000/chat_script',
           { user_input: inputMessage }, // 请求体
           {
             headers: {
@@ -138,26 +138,26 @@ export function ChatView({ title = 'Blank' }: Props) {
             onChange={(e) => setNewChatName(e.target.value)}
             sx={{ mt: 2 }}
           />
-          
+
           {/* 聊天类型选择 */}
           <Box sx={{ mt: 1, mb: 1 }}>
-            <Button 
-              variant={chatType === 'shared' ? 'contained' : 'outlined'} 
-              color="primary" 
+            <Button
+              variant={chatType === 'shared' ? 'contained' : 'outlined'}
+              color="primary"
               onClick={() => setChatType('shared')}
             >
               Shared
             </Button>
-            <Button 
-              variant={chatType === 'personal' ? 'contained' : 'outlined'} 
-              color="secondary" 
+            <Button
+              variant={chatType === 'personal' ? 'contained' : 'outlined'}
+              color="secondary"
               onClick={() => setChatType('personal')}
               sx={{ ml: 1 }}
             >
               Personal
             </Button>
           </Box>
-          
+
           <Button
             variant="contained"
             color="primary"
