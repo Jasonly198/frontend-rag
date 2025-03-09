@@ -37,21 +37,21 @@ interface DatabaseData {
 
 export function WorkspaceView({ title = 'Blank' }: Props) {
     const [open, setOpen] = useState(false);
-  
+
   // 打开对话框
     const handleClickOpen = () => {
       setWorkspaceName(''); // 重置 workspaceName 状态为空字符串
       setSelectedDatabase(''); // 重置 selectedDatabase 状态为默认值
       setOpen(true);
     };
-  
+
   // 关闭对话框
     const handleClose = () => {
       setOpen(false);
     };
-  
+
     const navigate = useNavigate();
-  
+
     const handleButton1Click = () => {
       // 跳转到 PageTest 页面 预备为test页面
       navigate('/workspace');
@@ -82,7 +82,7 @@ export function WorkspaceView({ title = 'Blank' }: Props) {
         console.error('Failed to fetch workspace data:', error);
       }
     };
-    
+
     useEffect(() => {
       fetchWorkspaces();
     }, []);
@@ -136,7 +136,7 @@ export function WorkspaceView({ title = 'Blank' }: Props) {
             const deleteResponse = await request.delete(`/ragApplications/workspace/delete/${selectedItemId}`);
             // 处理删除成功的逻辑
             console.log(`Workspace with ID ${selectedItemId} deleted successfully`);
-            // fetchWorkspaces(); 
+            // fetchWorkspaces();
             window.location.reload();
         } catch (error) {
             console.error('Error deleting workspace:', error);
@@ -161,7 +161,7 @@ export function WorkspaceView({ title = 'Blank' }: Props) {
               selectedDatabase
             });
             console.log(`Workspace with ID ${selectedItemId} edited successfully`);
-            // fetchWorkspaces(); 
+            // fetchWorkspaces();
             window.location.reload()
         } catch (error) {
             console.error('Error editing workspace:', error);
@@ -188,12 +188,12 @@ export function WorkspaceView({ title = 'Blank' }: Props) {
           console.error('Failed to fetch button data:', error);
         }
       };
-  
+
       fetchDatabases();
     }, []);
 
-    
-  
+
+
     return (
       <DashboardContent maxWidth="xl">
         <Typography variant="h4"> {title} </Typography>
@@ -219,7 +219,7 @@ export function WorkspaceView({ title = 'Blank' }: Props) {
                 autoFocus
                 margin="dense"
                 value={workspaceName}
-                onChange={handleWorkspaceNameChange} 
+                onChange={handleWorkspaceNameChange}
                 fullWidth
                 variant="outlined"
                 />
@@ -251,7 +251,7 @@ export function WorkspaceView({ title = 'Blank' }: Props) {
                 </Button>
             </DialogActions>
         </Dialog>
-  
+
         <Box
         sx={{
           maxHeight: '400px', // 设置最大高度
@@ -288,7 +288,7 @@ export function WorkspaceView({ title = 'Blank' }: Props) {
 
             <Box key={button.id}
               sx={{
-                marginTop: 7, 
+                marginTop: 7,
               }}
             >
               <button
@@ -315,7 +315,7 @@ export function WorkspaceView({ title = 'Blank' }: Props) {
                 autoFocus
                 margin="dense"
                 value={workspaceName}
-                onChange={handleWorkspaceNameChange} 
+                onChange={handleWorkspaceNameChange}
                 fullWidth
                 variant="outlined"
                 />
@@ -387,4 +387,3 @@ export function WorkspaceView({ title = 'Blank' }: Props) {
       </DashboardContent>
     );
   }
-  

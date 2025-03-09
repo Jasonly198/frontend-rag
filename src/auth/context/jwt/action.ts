@@ -25,13 +25,16 @@ export const signInWithPassword = async ({ email, password }: SignInParams): Pro
     const params = { email, password };
     console.log('params', params);
 
-    const res = await axios.post(endpoints.auth.signIn, params);
+    // const res = await axios.post(endpoints.auth.signIn, params);
+    const res = await axios.post('http://localhost:8080/ragApplications/auth/jwt/sign-in', params);
+    console.log('params', res);
 
     if (res.status >= 400) {
       throw new Error('Email already exists');
     }
 
     const { accessToken } = res.data;
+    console.log('token', accessToken);
 
     if (!accessToken) {
       throw new Error('Access token not found in response');
@@ -63,7 +66,7 @@ export const signUp = async ({
   try {
     console.log("我被调用了");
     const res = await axios.post(endpoints.auth.signUp, params);
-    
+
 
     const { accessToken } = res.data;
 

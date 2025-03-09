@@ -23,11 +23,14 @@ const authJwt = {
     {
       path: 'sign-in',
       element: (
-        <GuestGuard>
-          <AuthSplitLayout section={{ title: 'Hi, Welcome back' }}>
-            <Jwt.SignInPage />
-          </AuthSplitLayout>
-        </GuestGuard>
+        // <GuestGuard>
+        //   <AuthSplitLayout section={{ title: 'Hi, Welcome back' }}>
+        //     <Jwt.SignInPage />
+        //   </AuthSplitLayout>
+        // </GuestGuard>
+        <AuthSplitLayout section={{ title: 'Hi, Welcome back' }}>
+          <Jwt.SignInPage />
+        </AuthSplitLayout>
       ),
     },
     {

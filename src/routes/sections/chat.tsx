@@ -44,7 +44,7 @@ export const Chatnavigation = () => {
 
     const routes: RouteObject[] = workspaces.map((workspace) => {
         const formattedWorkspaceName = workspace.name.replace(/\s+/g, '-'); // 替换空格为破折号
-      
+
         return {
           path: `/${formattedWorkspaceName}`, // 使用格式化后的工作区名称
           element: CONFIG.auth.skip ? <>{layoutContent}</> : <AuthGuard>{layoutContent}</AuthGuard>,
@@ -58,6 +58,6 @@ export const Chatnavigation = () => {
           ],
         };
       });
-      
+
       return routes;
 };

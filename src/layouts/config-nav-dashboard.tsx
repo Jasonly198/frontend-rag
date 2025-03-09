@@ -6,6 +6,7 @@ import { SvgColor } from 'src/components/svg-color';
 import { useEffect, useState } from 'react';
 
 import axios from 'axios';
+import request from "../utils/request";
 
 // ----------------------------------------------------------------------
 
@@ -46,9 +47,10 @@ const ICONS = {
 const fetchWorkspaces = async () => {
   console.log('Fetching workspaces...');
   try {
-    const response = await axios.get('http://localhost:8080/ragApplications/workspace/list');
-    console.log('Fetched workspaces:', response.data); 
-    return response.data; 
+    // const response = await axios.get('http://localhost:8080/ragApplications/workspace/list');
+    const response = await request.get('/ragApplications/workspace/list');
+    console.log('Fetched workspaces:', response.data);
+    return response.data;
   } catch (error) {
     console.error('Error fetching workspaces:', error);
     return [];
@@ -56,15 +58,15 @@ const fetchWorkspaces = async () => {
 };
 
 
-const buildNavData = (workspaces: any[]) => 
+const buildNavData = (workspaces: any[]) =>
   workspaces.map((workspace: any, index: number) => ({
-    subheader: workspace.name, 
+    subheader: workspace.name,
     items: [
       {
         title: 'Chat',
         path: `/${workspace.name.replace(/\s+/g, '-')}/chat`,
         icon: ICONS.chat,
-      } 
+      }
     ],
   }));
 

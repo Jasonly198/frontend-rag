@@ -5,6 +5,16 @@ const service = axios.create({
   baseURL: 'http://localhost:8080', // 基础 URL
   timeout: 5000, // 请求超时时间
 });
+// 设置请求拦截器
+service.interceptors.request.use(
+  config => {
+    const accessToken = sessionStorage.getItem('jwt_access_token');
+    if (accessToken) {
+      config.headers.token = accessToken;
+    }
+    return config;
+  },
+  error => Promise.reject(error));
 
 // // 请求拦截器
 // service.interceptors.request.use(

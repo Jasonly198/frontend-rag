@@ -41,7 +41,8 @@ export function AuthGuard({ children }: Props) {
       return;
     }
 
-    if (!authenticated) {
+    // if (!authenticated) {
+    if(!sessionStorage.getItem('jwt_access_token')){
       const { method } = CONFIG.auth;
 
       const signInPath = {

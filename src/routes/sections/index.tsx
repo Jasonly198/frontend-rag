@@ -12,7 +12,7 @@ import { Chatnavigation } from './chat';
 
 export function Router() {
   const chatRoutes = Chatnavigation(); // 使用 Chatnavigation 生成路由配置
-  
+
   return useRoutes([
     {
       path: '/',
