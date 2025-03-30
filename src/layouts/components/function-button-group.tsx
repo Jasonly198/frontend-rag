@@ -13,17 +13,17 @@
 //     };
 
 //   return (
-//     <ButtonGroup      
+//     <ButtonGroup
 //     variant="contained"
 //     aria-label="Button group"
 //     sx={{
 //         backgroundColor: 'white',
 //         '& .MuiButtonBase-root': {
-//             borderRight: '1px solid #C0C0C0', 
+//             borderRight: '1px solid #C0C0C0',
 //         },
 //         border: '1px solid #C0C0C0'
 //     }}
-        
+
 //     >
 //       <Button onClick={() => handleButtonClick('Database')} sx={{ color: selectedButton === 'Database' ? 'inherit' : '#C0C0C0',  backgroundColor: 'white'}}>Database</Button>
 //       <Button onClick={() => handleButtonClick('Chat')} sx={{ color: selectedButton === 'Chat' ? 'inherit' : '#C0C0C0', backgroundColor: 'white'}}>Chat</Button>
@@ -35,7 +35,7 @@
 import { ButtonGroup, Button, ButtonProps } from '@mui/material';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom'; // 导入 useNavigate 替代 useHistory
-import { paths } from 'src/routes/paths'; 
+import { paths } from 'src/routes/paths';
 
 export function FunctionButtonGroup({ sx, ...other }: ButtonProps) {
   const [selectedButton, setSelectedButton] = useState('Chat'); // 初始选中的按钮
@@ -46,8 +46,8 @@ export function FunctionButtonGroup({ sx, ...other }: ButtonProps) {
 
     // 根据按钮名称导航到不同页面
     switch (buttonName) {
-      case 'Database':
-        navigate(paths.navigation.database); // 设定数据库页面的路径
+      case 'Knowledge Base':
+        navigate(paths.navigation.database); // 设定知识库页面的路径
         break;
       // case 'Chat':
       //   navigate(paths.navigation.chat); // 设定聊天页面的路径
@@ -76,7 +76,7 @@ export function FunctionButtonGroup({ sx, ...other }: ButtonProps) {
       }}
     >
          {/* <Button onClick={() => handleButtonClick('Chat')} sx={{ color: selectedButton === 'Chat' ? 'inherit' : '#C0C0C0', backgroundColor: 'white' }}>Chat</Button> */}
-      <Button onClick={() => handleButtonClick('Database')} sx={{ color: selectedButton === 'Database' ? 'inherit' : '#C0C0C0', backgroundColor: 'white' }}>Database</Button>
+      <Button onClick={() => handleButtonClick('Knowledge Base')} sx={{ color: selectedButton === 'Database' ? 'inherit' : '#C0C0C0', backgroundColor: 'white' }}>Knowledge Base</Button>
       {/* <Button onClick={() => handleButtonClick('File Management')} sx={{ color: selectedButton === 'File Management' ? 'inherit' : '#C0C0C0', backgroundColor: 'white' }}>File Management</Button> */}
       <Button onClick={() => handleButtonClick('Workspace')} sx={{ color: selectedButton === 'Workspace' ? 'inherit' : '#C0C0C0', backgroundColor: 'white' }}>Workspace</Button>
     </ButtonGroup>
